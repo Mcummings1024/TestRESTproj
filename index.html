@@ -4,10 +4,41 @@
     <head>
         <meta charset="utf-8" />
         <title>Matt Cummings</title>
-    </head>
-    <body ng-controller="myController as myCtrl">
-        <div>Test</div>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.min.js"></script>
-        <script src="./js/script.js"></script>
+        <script src="https://code.angularjs.org/1.2.29/angular-route.min.js"></script>
+        <script src="./js/app.js"></script>
+        <script src="./js/postService.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    </head>
+    <body ng-controller="MainController as main">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="page-header">
+                    <h1>Matt News</h1>
+                </div>
+
+                <div ng-repeat="post in main.posts | orderBy: '-upvotes'">
+                    <span class="glyphicon glyphicon-thumbs-up" ng-click="main.upvote(post)"></span>
+                    {{post.upvotes}}
+                    <span class="title">
+                        <a ng-show="post.link" href="{{post.link}}">
+                            {{post.title}}
+                        </a>
+                        <span ng-hide="post.link">
+                            {{post.title}}
+                        </span>
+                    </span>
+                </div>
+                <form ng-submit="main.addPost()">
+                    <h3>Add a new post</h3>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Title" ng-model="main.title" />
+                        <input type="text" class="form-control" placeholder="Link" ng-model="main.link" />
+                        <button type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
